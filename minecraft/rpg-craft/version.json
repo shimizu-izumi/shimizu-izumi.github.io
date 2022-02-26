@@ -1,0 +1,10 @@
+{
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/rpg-craft",
+    "1.18.1": {
+      "0.0.1": "initial pre alpha release"
+    },
+    "promos": {
+      "1.18.1-latest": "0.0.1",
+      "1.18.1-recommended": "0.0.1"
+    }
+  }
