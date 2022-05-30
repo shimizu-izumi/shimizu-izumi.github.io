@@ -1,0 +1,3490 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Direct Messages - 5hrimp5imp</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
+.spoiler {
+    /* width: fit-content; */
+    display: inline-block;
+    /* This is more consistent across browsers, the old attribute worked well under Chrome but not FireFox. */
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image * {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 100%;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__reference-symbol {
+    grid-column: 1;
+    border-style: solid;
+    border-width: 2px 0 0 2px;
+    border-radius: 8px 0 0 0;
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.chatlog__reference {
+    display: flex;
+    grid-column: 2;
+    margin-left: 1.2em;
+    margin-bottom: 0.25em;
+    font-size: 0.875em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: center;
+}
+
+.chatlog__reference-avatar {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    margin-right: 0.25em;
+}
+
+.chatlog__reference-name {
+    margin-right: 0.25em;
+    font-weight: 600;
+}
+
+.chatlog__reference-link {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatlog__reference-link:hover {
+    text-decoration: none;
+}
+
+.chatlog__reference-content > * {
+    display: inline;
+}
+
+.chatlog__reference-edited-timestamp {
+    margin-left: 0.25em;
+    font-size: 0.8em;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__attachment-container {
+    height: 40px;
+    width: 100%;
+    max-width: 520px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.chatlog__attachment-icon {
+    float: left;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.chatlog__attachment-icon > .a {
+    fill: #f4f5fb;
+    d: path("M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z");
+}
+
+.chatlog__attachment-icon > .b {
+    fill: #7789c4;
+    d: path("M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z");
+}
+
+.chatlog__attachment-icon > .c {
+    fill: #f4f5fb;
+    d: path("M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z");
+}
+
+.chatlog__attachment-icon > .d {
+    fill: #7789c4;
+    d: path("M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z");
+}
+
+.chatlog__attachment-filesize {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.chatlog__attachment-filename {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__reference-symbol {
+    border-color: #4f545c;
+}
+
+.chatlog__reference {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link:hover {
+    color: #ffffff;
+}
+
+.chatlog__reference-edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__attachment-container {
+    background-color: #2f3136;
+    border-color: #292b2f;
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Direct Messages</div>
+        <div class="preamble__entry">Private / 5hrimp5imp</div>
+
+
+            <div class="preamble__entry preamble__entry--small">
+After 29-May-22 12:00 AM            </div>
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:42 AM</span>
+
+            <div class="chatlog__message " data-message-id="980254716187508797" id="message-980254716187508797">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><a href="https://youtu.be/a_XXYvOc3Q4">https://youtu.be/a_XXYvOc3Q4</a></span>
+
+                        </div>
+                    </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(255,0,0,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://www.youtube.com/channel/UCNZIJVneqrZYzWEk3-RQuAQ">Stix</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://www.youtube.com/watch?v=a_XXYvOc3Q4">
+                                                    <div class="markdown preserve-whitespace">NI NO KUNI: CROSS WORLDS IS A TRAGIC MESS <img class="emoji " alt="🗑" title="🗑" src="https://twemoji.maxcdn.com/2/72x72/1f5d1.png">️<img class="emoji " alt="🔥" title="🔥" src="https://twemoji.maxcdn.com/2/72x72/1f525.png"></div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace">Just a guy that finds funny stuff online.
+Become a Patron over on Patreon! <a href="https://stixy.me/Patreon">https://stixy.me/Patreon</a>
+Watch me stream over on Twitch: <a href="https://stixy.me/Twitch">https://stixy.me/Twitch</a>
+Sauce: ?
+
+Read more: <a href="https://www.mmobyte.tv/">https://www.mmobyte.tv/</a>
+
+FOLLOW ME ヽ(&#180;▽`)/: 
+Twitch: <a href="https://www.twitch.tv/mmobyte">https://www.twitch.tv/mmobyte</a>
+Twitter: <a href="https://twitter.com/ByteStix/">https://twitter.com/ByteStix/</a>
+
+All credit is given (in the form of &quot;sauce&quot;) to...</div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://i.ytimg.com/vi/a_XXYvOc3Q4/maxresdefault.jpg">
+                                            <img class="chatlog__embed-thumbnail" src="https://i.ytimg.com/vi/a_XXYvOc3Q4/maxresdefault.jpg" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:43 AM</span>
+
+            <div class="chatlog__message " data-message-id="980255010564763719" id="message-980255010564763719">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Haha das game war f&#252;r mich schon tot als ich erfahren habe das Netmarble der Publisher is denn die games von denen sind nichts anderes als Geldmaschinen</span>
+
+                                <span class="chatlog__edited-timestamp" title="29-May-22 01:43 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:43 AM</span>
+
+            <div class="chatlog__message " data-message-id="980255082966810664" id="message-980255082966810664">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Traurig</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980255175182807061" id="message-980255175182807061">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Und das mit so ner schonen Marke..</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980255242237149214" id="message-980255242237149214">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Wo ghibli Zeichner hinter stecken</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980255335652675595" id="message-980255335652675595">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Die nix f&#252;r konnen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980255590817361920" id="message-980255590817361920">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich kenn Leute die zocken das gern xD</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980255660484730940" id="message-980255660484730940">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Und finden das wohl ok was netmarble macht</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980255762850926592" id="message-980255762850926592">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Argument: ist doch normal</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:46 AM</span>
+
+            <div class="chatlog__message " data-message-id="980255899954339900" id="message-980255899954339900">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Du die original spiele mit von Ghibli gemachten Cutscenes sollen halt auch gut sein zum gl&#252;ck hat soweit ich wei&#223; Ghibli nichts mit dem game zu tun</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:47 AM</span>
+
+            <div class="chatlog__message " data-message-id="980255945940684810" id="message-980255945940684810">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Gut ^^*</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980256002593153104" id="message-980256002593153104">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Die originalen sind gut ja</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980256025368211506" id="message-980256025368211506">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Besonders Teil 2</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980256138496978964" id="message-980256138496978964">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Towe of Fantasy kann man auch vergessen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980256178066051113" id="message-980256178066051113">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Da es p2w ist im pvp</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980256615804600401" id="message-980256615804600401">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><a href="https://youtu.be/7Thwm62iq1E">https://youtu.be/7Thwm62iq1E</a></span>
+
+                        </div>
+                    </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(255,0,0,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://www.youtube.com/channel/UC0Bi5KMcECRVYis5Gb_ZYZQ">Wuthering Waves</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://www.youtube.com/watch?v=7Thwm62iq1E">
+                                                    <div class="markdown preserve-whitespace">Wuthering Waves Gameplay Trailer</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace">Explore where your heart takes you. Slay Calamons with your Niellore blade. End the cycle of calamity.
+*The game is still in the early stage of development, so graphic qualities might not be ideal.</div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://i.ytimg.com/vi/7Thwm62iq1E/maxresdefault.jpg">
+                                            <img class="chatlog__embed-thumbnail" src="https://i.ytimg.com/vi/7Thwm62iq1E/maxresdefault.jpg" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980256178066051113&#39;)">
+                    <span class="chatlog__reference-content">
+Da es p2w ist im pvp                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:50 AM</span>
+
+            <div class="chatlog__message " data-message-id="980256692052848740" id="message-980256692052848740">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">PvP is ja zum gl&#252;ck kein muss und es ist nicht direkt P2W es ist einfach nur unbalanced was es P2W macht da du am Arsch bist wenn du nur eine der drei perfekten Waffen nicht hast wenn der Gegner alle hat</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:50 AM</span>
+
+            <div class="chatlog__message " data-message-id="980256797560545320" id="message-980256797560545320">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Tof hat mir auch so nicht gefallen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980256615804600401&#39;)">
+                    <span class="chatlog__reference-content">
+<a href="https://youtu.be/7Thwm62iq1E">https://youtu.be/7Thwm62iq1E</a>                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:50 AM</span>
+
+            <div class="chatlog__message " data-message-id="980256827646291968" id="message-980256827646291968">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Schon gesehen und da bin ich mir sicher das es kein Handy game wird denn das Combat sieht zu kompliziert und schnell aus um es gut aufs Handy zu bringen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980256797560545320&#39;)">
+                    <span class="chatlog__reference-content">
+Tof hat mir auch so nicht gefallen                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="980256942620540970" id="message-980256942620540970">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Warum es ist das was sich die meisten bei Genshin gew&#252;nscht haben</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="980256944810000434" id="message-980256944810000434">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Sieht vielversprechend aus</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="Shimizu Izumi | 清水イズミ#3263" style="">Shimizu Izumi | 清水イズミ</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980256942620540970&#39;)">
+                    <span class="chatlog__reference-content">
+Warum es ist das was sich die meisten bei Genshin gew&#252;nscht haben                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257003245010995" id="message-980257003245010995">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Es ist nicht gut ..</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257069296922716" id="message-980257069296922716">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Das Kampfsytem ist mies</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257113282601061" id="message-980257113282601061">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Es ist immernoch besser als bei Genshin</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257186439647293" id="message-980257186439647293">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">man kann die spiele aboslut nicht miteinander vergleichen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257310192582686" id="message-980257310192582686">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Doch weil es das gleiche Hauptgenre hat</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257315791978526" id="message-980257315791978526">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich mag Genshin auch nicht mehr so aber es erz&#228;hlt trzd ne gute Story es geh&#246;rt ins Universe von Honkai</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257338344751114" id="message-980257338344751114">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980257315791978526&#39;)">
+                    <span class="chatlog__reference-content">
+Ich mag Genshin auch nicht mehr so aber es erz&#228;hlt trzd ne gute Story es geh&#246;rt ins Universe von Honkai                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257399078281266" id="message-980257399078281266">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Wei&#223; man noch nicht zu 100% aber sehr wahrscheinlich ist es so</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:53 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257463406321718" id="message-980257463406321718">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Tof hat ne schlechtere Grafik, schlechteres Charakterdesigne geschweige den Tof hat eins zu eins Waffen f&#252;r ein Promo Video aus Honkai kopiert</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257489826250833" id="message-980257489826250833">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und wer sowas macht ist schon mies</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257568695918653" id="message-980257568695918653">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">schon dreist genug zu faul zu sein um eigene waffen zu designe</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257602971766784" id="message-980257602971766784">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und 1 zu 1 das selbe schwert zu verwenden was genauso aussah</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257655534796850" id="message-980257655534796850">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">die Entwickler von Tof versuchen zu sehr Genshin zu kopieren</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257773596065843" id="message-980257773596065843">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">bisher konnte kein gacha game f&#252;r mich Honkai toppen ^^,</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257837362069626" id="message-980257837362069626">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Honkai hat ne geniale Story, ist F2P freundlicher als jedes andere Gacha bisher</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257875622522890" id="message-980257875622522890">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">hat geilen Soundtrack, top Animationen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980257463406321718&#39;)">
+                    <span class="chatlog__reference-content">
+Tof hat ne schlechtere Grafik, schlechteres Charakterdesigne geschweige den Tof hat eins zu eins Waffen f&#252;r ein Promo Video aus Honkai kopiert                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257920254083124" id="message-980257920254083124">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Du wei&#223;t schon das nicht Hotta das Schwert kopiert hat sondern die Firma die das Video gemacht hat denn die haben das nicht mal selbst gemacht und das es bei der Quality Control von Hotta &#252;bersehen wurde</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="980257934032379914" id="message-980257934032379914">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich hab wieder mit Honkai Impacat angefangen mit nem neuen account und es ist so gut ^^</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980257985064476764" id="message-980257985064476764">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Sowas darf man nicht &#252;bersehen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980257655534796850&#39;)">
+                    <span class="chatlog__reference-content">
+die Entwickler von Tof versuchen zu sehr Genshin zu kopieren                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258059769229314" id="message-980258059769229314">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Das stimmt nicht sie haben lediglich ein Spiel mit den gleichen Genres gemacht das ist der gleiche schei&#223; wie das Genshin ne BOTW Kopie ist</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258079025270804" id="message-980258079025270804">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich will diese Dikussion nicht f&#252;hren, ich finde diesen Vergleich im Internet dumm oder Leute die sagen Tof w&#228;re ein Genshin killer</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258103801020458" id="message-980258103801020458">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Genshin ist keine Kopie von Botw..</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258118040711198" id="message-980258118040711198">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Botw ist auch nicht neu</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980258103801020458&#39;)">
+                    <span class="chatlog__reference-content">
+Genshin ist keine Kopie von Botw..                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258147858014210" id="message-980258147858014210">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich wei&#223; aber das haben viele behauptet</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258150911451158" id="message-980258150911451158">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Botw hat sich von anderen Open Worlds insperiert</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258174160486431" id="message-980258174160486431">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">du kannst Open World nicht neu Gestalten</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258199426965534" id="message-980258199426965534">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">jedes Game schaut sich Dinge ab das ist normal</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258231454679060" id="message-980258231454679060">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ja die das behaupten sind auch dumm</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980258118040711198&#39;)">
+                    <span class="chatlog__reference-content">
+Botw ist auch nicht neu                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258240136876083" id="message-980258240136876083">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich sag nur die Kletter Animation</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258255831973899" id="message-980258255831973899">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ja und?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258280863567892" id="message-980258280863567892">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">hatten Games vor botw auch..</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258333539848232" id="message-980258333539848232">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">1:1 die gleiche wie in BOTW da kann man aber auch nicht viel anders machen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258362497335377" id="message-980258362497335377">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Botw ist ein Top Game aber das ist kein Grund Games daf&#252;r zu punishen wenn sie das Spiel als Vorlage nehmen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258398677397524" id="message-980258398677397524">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und selbst wenn? Ist doch schei&#223; egal</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258413915279440" id="message-980258413915279440">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">es ist kein Klon</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258440402333706" id="message-980258440402333706">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Botw ist ein Meilenstein</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258471297560617" id="message-980258471297560617">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">der Entwicklern Inspiration gab</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258518043099136" id="message-980258518043099136">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Elden Ring hat sich stark an Botw orientiert</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258527304106064" id="message-980258527304106064">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">usw.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258573886038097" id="message-980258573886038097">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Botw ist der Grund warum Open World spiele besser werden</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980258079025270804&#39;)">
+                    <span class="chatlog__reference-content">
+Ich will diese Dikussion nicht f&#252;hren, ich finde diesen Vergleich im Internet dumm oder Leute die sagen Tof w&#228;re ein Genshin killer                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:57 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258600041742377" id="message-980258600041742377">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Es ist definitiv kein Genshin killer aber Genshin is grad eh am verrecken und daher wird es ein starker Konkurrent sein</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:57 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258604370239549" id="message-980258604370239549">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">den Sinn eines Open World spiels verstanden haben</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258625245302844" id="message-980258625245302844">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Gro&#223;e Welt muss gef&#252;llt werden</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258671328124980" id="message-980258671328124980">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und ToF hatte absolut keine wirklichen Orte die sich eingebrannt haben</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:57 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258672972267550" id="message-980258672972267550">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Und zwar mit mehr als nur quests</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="Shimizu Izumi | 清水イズミ#3263" style="">Shimizu Izumi | 清水イズミ</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980258600041742377&#39;)">
+                    <span class="chatlog__reference-content">
+Es ist definitiv kein Genshin killer aber Genshin is grad eh am verrecken und daher wird es ein starker Konkurrent sein                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:58 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258733424791552" id="message-980258733424791552">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ist es nicht ^^ Download und Spielerzahlen sind hoch genug</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258808146329610" id="message-980258808146329610">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und warum ist dir das so wichtig was mit Genshin passiert xD</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980258671328124980&#39;)">
+                    <span class="chatlog__reference-content">
+und ToF hatte absolut keine wirklichen Orte die sich eingebrannt haben                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:58 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258834381697064" id="message-980258834381697064">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Du darfst nicht vergessen das die das spiel am ende gerusht haben wegen den Chinesischen Gesetzen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:58 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258849405693982" id="message-980258849405693982">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich check nicht warum das Leute Interessiert wenn sies nicht spielen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258898193821736" id="message-980258898193821736">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ja aber daf&#252;r kann Miyoho nichts</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258920192962560" id="message-980258920192962560">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und das war nur mit Genshin der Fall</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980258733424791552&#39;)">
+                    <span class="chatlog__reference-content">
+Ist es nicht ^^ Download und Spielerzahlen sind hoch genug                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:59 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258929013575710" id="message-980258929013575710">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Stimmt aber sie sinken immer weiter da es einfach keinen guten Endgame Content gibt</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:59 AM</span>
+
+            <div class="chatlog__message " data-message-id="980258966313529434" id="message-980258966313529434">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Sie k&#246;nnen nichts daf&#252;r das Genshin aktuell leidet</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980258993576480778" id="message-980258993576480778">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">am anfang steckte auch liebe in Genshin</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259005077282836" id="message-980259005077282836">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und das hat man gemerkt</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259056491053147" id="message-980259056491053147">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ja und? Ich g&#246;nn trzd den Leuten den Spass</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259086702612550" id="message-980259086702612550">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und mich nerven die Leute im INternet die ToF hochhypen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259112661164052" id="message-980259112661164052">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ToF wird sowieos nicht so erfolgreich</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259124812058644" id="message-980259124812058644">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">wie GEnshin oder Honkai</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980259005077282836&#39;)">
+                    <span class="chatlog__reference-content">
+und das hat man gemerkt                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 01:59 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259139747991633" id="message-980259139747991633">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Jetzt ist es nur noch ne Geldmaschiene</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980259112661164052&#39;)">
+                    <span class="chatlog__reference-content">
+ToF wird sowieos nicht so erfolgreich                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:00 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259185923084359" id="message-980259185923084359">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Also der Chinesische Markt sagt da was anderes</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:00 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259202851303444" id="message-980259202851303444">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">jedes Game ist dazu um Geld zu machen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259222983962685" id="message-980259222983962685">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Willkommen in der Realit&#228;t</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259268651532348" id="message-980259268651532348">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Tof ist auch eine Geldmachine..</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259287857250334" id="message-980259287857250334">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Es ist ein Gacha Game</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259324746162206" id="message-980259324746162206">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Gacha Games sind der einfachste Weg Geld mit Spielen zu machen..</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259339182964748" id="message-980259339182964748">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">warum wohl sind sie so trendy</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980259202851303444&#39;)">
+                    <span class="chatlog__reference-content">
+jedes Game ist dazu um Geld zu machen                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:00 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259361542766662" id="message-980259361542766662">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ja aber es gibt immernoch einen Unterschied zwischen gutes Produkt mit dem man Geld verdienen will und Geldmashiene</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:00 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259370606665748" id="message-980259370606665748">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Denkst du ToF ist f&#252;r Fans? xD</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259391502708756" id="message-980259391502708756">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ToF ist da um Geld zu machen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259407160021004" id="message-980259407160021004">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">es hat keinen anderen Grund</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259447031070780" id="message-980259447031070780">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ToF und gutes Produkt..</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259477146206209" id="message-980259477146206209">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Tolles PvP was sie da gemacht haben</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259498423902238" id="message-980259498423902238">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ne kleine Runde hingerotzte Arena</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259529075859526" id="message-980259529075859526">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Belanglos SideQuest</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259537670012978" id="message-980259537670012978">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Einfallose Bosse</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980259477146206209&#39;)">
+                    <span class="chatlog__reference-content">
+Tolles PvP was sie da gemacht haben                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:01 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259564450643988" id="message-980259564450643988">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">WIE GESAGT WENN DU KEIN BOCK AUF PVP HAST MUSST DU ES NICHT SPIELEN</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:01 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259602929188924" id="message-980259602929188924">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Schlechtes Kampfsytem die keine Komplexit&#228;t bietet</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259659313188875" id="message-980259659313188875">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">aber wenn man schon PvP einbaut dann soll es auch gut sein</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259696717991936" id="message-980259696717991936">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">oder gleich rausgestrichen werden</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980259602929188924&#39;)">
+                    <span class="chatlog__reference-content">
+Schlechtes Kampfsytem die keine Komplexit&#228;t bietet                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259739067904020" id="message-980259739067904020">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Es ist immernoch besser als das von Genshin denn da musst du nur draufkloppen bei ToF musst du wenigstens noch das ausweichen timen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259752393191535" id="message-980259752393191535">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und deren Jump in Run Modus oder Battle Royal Modus</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259800699011134" id="message-980259800699011134">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Junge warum musst du TOF ganze Zeit so defenden</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259821116858388" id="message-980259821116858388">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und immer sagen: Besser als Genshin</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259847939448933" id="message-980259847939448933">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">hmmmm keine Ahnung</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="980259848660856872" id="message-980259848660856872">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">du musst jemanden deine Meinung reindr&#252;cken</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980259955414298704" id="message-980259955414298704">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ToF ist ein Chinesiches Gacha Game das nicht dazu da ist um mit liebe zu prallen sondern um schnelles Geld  zu machen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260066005508116" id="message-980260066005508116">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und wenn Miyoho nicht f&#252;r Qualit&#228;t stehen w&#252;rde warum ist Honkai Impact 3rd dann so gut? Warum ist es so beliebt?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260110301560842" id="message-980260110301560842">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Warum ist es immer noch in den Top Pl&#228;tzen der Moble Games</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260149111422997" id="message-980260149111422997">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Warum hat es so eine unfassbare gute Geschichte</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="Shimizu Izumi | 清水イズミ#3263" style="">Shimizu Izumi | 清水イズミ</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980259847939448933&#39;)">
+                    <span class="chatlog__reference-content">
+hmmmm keine Ahnung                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:03 AM</span>
+
+            <div class="chatlog__message " data-message-id="980260183047544912" id="message-980260183047544912">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">vielleicht weil ich durch die letzten Nachrichten gemerkt habe das du zu der Gruppe leuten geh&#246;rst die so drauf sind: miHoYo &#252;ber alles Tower of Fantasy will Genshin nur kopieren bla bla bla</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="980260207533916170" id="message-980260207533916170">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Nur weil mal ein Spiel eines Entwickler nicht gut l&#228;fut</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260234981412884" id="message-980260234981412884">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">jeder Entwickler hat Tops und Flops</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260306787926068" id="message-980260306787926068">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Nein Ich habe nie gesagt ToF ist nei Kopie von Genshin</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="980260307144441948" id="message-980260307144441948">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Bis auf EA und Ubisoft bei den ich ein Top die ausnahme</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="980260357790638150" id="message-980260357790638150">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">EA ..</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260371313078332" id="message-980260371313078332">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ubisoft</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260395031859240" id="message-980260395031859240">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">sind beide wie Blizzard Dreck</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260502871613460" id="message-980260502871613460">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Willkommen in der Realit&#228;t</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260522643562536" id="message-980260522643562536">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Entwickler sind nicht unsere Freunde</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260536438648842" id="message-980260536438648842">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">schon lange nicht mehr</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260567044460574" id="message-980260567044460574">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">egal ob Nintendo oder sonst wer</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260594974326805" id="message-980260594974326805">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">das war fr&#252;her vlt mal anders</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260647256338482" id="message-980260647256338482">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">die Spiele Industrie ist zu einer reinen Wirtschaftsindustrie geworden</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980257655534796850&#39;)">
+                    <span class="chatlog__reference-content">
+die Entwickler von Tof versuchen zu sehr Genshin zu kopieren                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:06 AM</span>
+
+            <div class="chatlog__message " data-message-id="980260920519458876" id="message-980260920519458876">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">...</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:07 AM</span>
+
+            <div class="chatlog__message " data-message-id="980260963351683093" id="message-980260963351683093">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">jaja blockier mich</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980260973342523472" id="message-980260973342523472">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ist cool</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261011661668352" id="message-980261011661668352">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">ja um dich zu triggern</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261035393032292" id="message-980261035393032292">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">weil du dich wie ein kleines Kind benimmst</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261049943085066" id="message-980261049943085066">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">das keine Kritik abkann</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261076723720203" id="message-980261076723720203">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und versucht sein Game auf den Tod zu defenden</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261105081405470" id="message-980261105081405470">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">wie Pokemon Fans die alles gut reden</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980261049943085066&#39;)">
+                    <span class="chatlog__reference-content">
+das keine Kritik abkann                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:08 AM</span>
+
+            <div class="chatlog__message " data-message-id="980261226288390185" id="message-980261226288390185">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich kann Kritik ab</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980261076723720203&#39;)">
+                    <span class="chatlog__reference-content">
+und versucht sein Game auf den Tod zu defenden                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:08 AM</span>
+
+            <div class="chatlog__message " data-message-id="980261315580948532" id="message-980261315580948532">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Nur weil es einfach kein vern&#252;nftiges Argument ist wenn man einen komplett optionalen teil eines Spiels nennt</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:08 AM</span>
+
+            <div class="chatlog__message " data-message-id="980261406400204840" id="message-980261406400204840">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Akzeptier einfach das Ich Tof belanglos und schei&#223;e finde. Es ist ein einfallose Open World Gacha Game. Eine uinteressante Welt, schlechtes Kampfsystem, mitttelm&#228;&#223;ige Grafik und Animationen, belangelose Neben Quest, langweilige Texte und keine INteressanten NPC</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261593445183518" id="message-980261593445183518">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich hab es mehrere Stunden gespielt bis Max Level in der Beta ok? Ich finds einfach schlecht</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261607890358322" id="message-980261607890358322">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ist meine eigene Meinung</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261702803263488" id="message-980261702803263488">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich hab kein Funken Emotionen in den Sequenzen der Story gesp&#252;rt</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980261940242808872" id="message-980261940242808872">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ich liebe Anime Games, aber auch nur wenn sie eine gute Story bieten und mich von Anfang an hooken, was bringt es mir ein Spiel  zu spielen was ich erstmal 100 Stunden spielen muss bis es mir gef&#228;llt? Nichts, ein Spiel muss man von Beginn an enjoyen k&#246;nnen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980262085755830333" id="message-980262085755830333">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und wenn ich als Entwickler schon Nebenmodi einbaue, dann haben sie auch Fair zu sein, das ist ein Fakt</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980262175706845204" id="message-980262175706845204">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">und ein Kampfsystem muss sich belohnend anf&#252;hlen</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+                <span class="chatlog__reference-name" title="5hrimp5imp#0002" style="">5hrimp5imp</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;980261406400204840&#39;)">
+                    <span class="chatlog__reference-content">
+Akzeptier einfach das Ich Tof belanglos und schei&#223;e finde. Es ist ein einfallose Open World Gacha Game. Eine uinteressante Welt, schlechtes Kampfsystem, mitttelm&#228;&#223;ige Grafik und Animationen, belangelose Neben Quest, langweilige Texte und keine INteressanten NPC                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/780035290551156736/6976376d302307f5b5bf9a38a33029f9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shimizu Izumi | 清水イズミ#3263" data-user-id="780035290551156736" style="">Shimizu Izumi | 清水イズミ</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="980262479147991050" id="message-980262479147991050">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">1. Kampfsystem ist immernoch besser als in Genshin 2. Ja mit dem meisten hast du recht aber so ist es nun mal nicht jedes Spiel ist Perfekt auch die Spiele von miHoYo nicht 3. Die story von ToF scheint wenigstens interessant zu sein 4. Wenigstens benutzt ToF mehr echte Cutscenes als Genshin 5. Die Grafik zu vergleichen ist absoluter Schwachsinn denn Genshin wurde mit Unity gemacht und ist am Limit dessen was mit der Engine m&#246;glich ist und ToF wurde mit Unreal gemacht wo es tausendmal schwerer ist ein gutes Anime Shading oder &#252;berhaupt ein Anime Shading hinzubekommen das annehmbar ist (spreche da &#252;brigens aus Erfahrung) denn in Unreal kannst nicht einfach mal so deinen eigenen Shader schreiben ohne den Quellcode der Engine zu ver&#228;ndern</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/935575131185635338/a_3ab3d2295e76b9ee736fc130727d3ae8.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="5hrimp5imp#0002" data-user-id="935575131185635338" style="">5hrimp5imp</span>
+
+
+        <span class="chatlog__timestamp">29-May-22 02:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="980262655333908480" id="message-980262655333908480">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">...und wieder die Genshin vergleiche</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980262803820666910" id="message-980262803820666910">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Akzeptier doch einfach meine Meinung</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="980262827132616725" id="message-980262827132616725">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">TOF ist absoluter M&#252;ll</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 146 message(s)</div>
+</div>
+
+</body>
+
+</html>
